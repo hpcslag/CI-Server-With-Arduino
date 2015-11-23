@@ -1,0 +1,56 @@
+#include <Bridge.h>
+#include <HttpClient.h>
+
+void setup() {
+  pinMode(13, OUTPUT); //red
+  pinMode(12, OUTPUT); //yellow
+  pinMode(11, OUTPUT); //green
+  digitalWrite(13, LOW);
+  digitalWrite(12, LOW);
+  digitalWrite(11, LOW);
+  Bridge.begin();
+  Serial.begin(9600);
+  //while(!Serial); without serial
+}
+
+void loop() {
+  HttpClient client;
+  client.get("http://{YourJenkinsCIServerURL}/job/{YourProjectName}/api/json?tree=color");
+  char str[50] = "";
+  while (client.available()) {
+    char c = client.read();
+    String covert(c);
+    strcat(str,covert.c_str());
+  }
+  CLED(str[10]);
+  
+  Serial.flush();
+  
+  delay(1000);
+  
+  Low(str[10]);
+}
+
+void CLED(char i){
+  if(i == 'r'){
+    Serial.println("red");
+    digitalWrite(13,HIGH);
+  }
+  if(i == 'y'){
+    Serial.println("yellow");
+    digitalWrite(12, HIGH);
+  }
+  if(i == 'g'){
+    Serial.println("green");
+    digitalWrite(11, HIGH);
+  }
+}
+
+void Low(int i){
+  if(i == 'r'){
+    digitalWrite(13,LOW);
+  }
+  if(i == 'y'){
+    digitalWrite(12, LOW);
+  }
+}
