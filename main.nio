@@ -40,7 +40,7 @@ void CLED(char i){
     Serial.println("yellow");
     digitalWrite(12, HIGH);
   }
-  if(i == 'g'){
+  if(i == 'b'){
     Serial.println("green");
     digitalWrite(11, HIGH);
   }
