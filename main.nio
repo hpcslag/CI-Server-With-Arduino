@@ -22,6 +22,7 @@ void loop() {
     String covert(c);
     strcat(str,covert.c_str());
   }
+  digitalWrite(11,LOW);
   CLED(str[10]);
   
   Serial.flush();
